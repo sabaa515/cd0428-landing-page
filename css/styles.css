@@ -11,8 +11,8 @@
 
 /* ---- Base Rules ---- */
 body {
-    background: rgb(136,203,171);
-    background: linear-gradient(0deg, rgba(136,203,171,1) 0%, rgba(0,13,60,1) 100%);
+    background: rgb(136, 203, 171);
+    background: linear-gradient(0deg, rgba(136, 203, 171, 1) 0%, rgba(0, 13, 60, 1) 100%);
     margin: 0;
     font-family: 'Merriweather', serif;
     color: #fff;
@@ -26,7 +26,7 @@ h1 {
     margin: 2em 1rem;
 }
 
-@media only screen and (min-width: 35em){
+@media only screen and (min-width: 35em) {
     h1 {
         font-size: 7em;
         margin: 2em 4rem 1em;
@@ -57,21 +57,71 @@ main {
 
 section {
     position: relative;
-    min-height: 80vh;
+    max-height: 80vh;
 }
 
+/* new */
+@media only screen and (min-width: 35em) {
+    section {
+        max-height: fit-content;
+    }
+
+}
+
+/* new */
+@media only screen and (max-width: 34em) {
+    section {
+        max-height: fit-content;
+    }
+}
 
 /* ---- Module Rules ---- */
 
 /* Navigation Styles*/
+.navbar__menu {
+    background-color: #fff;
+    padding: 2rem;
+    display: flex;
+    justify-content: center;
+}
+
 .navbar__menu ul {
     padding-left: 0;
     margin: 0;
-    text-align: right;
+    /* new */
+    display: flex;
+    justify-content: space-evenly;
+    width: 100%;
+}
+
+/* new */
+@media only screen and (max-width: 34em) {
+
+    .navbar__menu ul {
+        flex-direction: column;
+    }
+
+
 }
 
 .navbar__menu li {
     display: inline-block;
+    /* new */
+    width: fit-content;
+
+}
+
+/* new */
+
+.navbar__menu li a {
+    text-decoration: none;
+    color: #000;
+}
+
+/* new */
+
+.bold {
+    font-weight: bolder;
 }
 
 .navbar__menu .menu__link {
@@ -80,6 +130,7 @@ section {
     font-weight: bold;
     text-decoration: none;
     color: #000;
+
 }
 
 .navbar__menu .menu__link:hover {
@@ -104,7 +155,7 @@ section {
     color: #fff;
 }
 
-.page__footer p{
+.page__footer p {
     color: #fff;
 }
 
@@ -116,17 +167,34 @@ section {
     text-align: left;
 }
 
-@media only screen and (min-width: 35em){
+/* new */
+
+.landing__container .content {
+    font-size: 1rem;
+    height: 0;
+    overflow: hidden;
+    transition: max-height 0.5s ease-in-out;
+}
+
+/* new */
+
+.landing__container .showContent {
+    cursor: pointer;
+}
+
+
+@media only screen and (min-width: 35em) {
     .landing__container {
         max-width: 50em;
         padding: 4em;
     }
+
 }
 
 section:nth-of-type(even) .landing__container {
     margin-right: 0;
     margin-left: auto;
-    text-align: right; 
+    text-align: right;
 }
 
 /* Background Circles */
@@ -146,8 +214,8 @@ section:nth-of-type(odd) .landing__container::before {
 
 section:nth-of-type(even) .landing__container::before {
     content: '';
-    background: rgb(255,255,255);
-    background: linear-gradient(0deg, rgba(255,255,255,.1) 0%, rgba(255,255,255,.2) 100%);
+    background: rgb(255, 255, 255);
+    background: linear-gradient(0deg, rgba(255, 255, 255, .1) 0%, rgba(255, 255, 255, .2) 100%);
     position: absolute;
     top: 3em;
     right: 3em;
@@ -161,8 +229,8 @@ section:nth-of-type(even) .landing__container::before {
 
 section:nth-of-type(3n) .landing__container::after {
     content: '';
-    background: rgb(255,255,255);
-    background: linear-gradient(0deg, rgba(255,255,255,.1) 0%, rgba(255,255,255,.2) 100%);
+    background: rgb(255, 255, 255);
+    background: linear-gradient(0deg, rgba(255, 255, 255, .1) 0%, rgba(255, 255, 255, .2) 100%);
     position: absolute;
     right: 0;
     bottom: 0;
@@ -176,8 +244,8 @@ section:nth-of-type(3n) .landing__container::after {
 
 section:nth-of-type(3n + 1) .landing__container::after {
     content: '';
-    background: rgb(255,255,255);
-    background: linear-gradient(0deg, rgba(255,255,255,.1) 0%, rgba(255,255,255,.2) 100%);
+    background: rgb(255, 255, 255);
+    background: linear-gradient(0deg, rgba(255, 255, 255, .1) 0%, rgba(255, 255, 255, .2) 100%);
     position: absolute;
     right: 20vw;
     bottom: -5em;
@@ -196,6 +264,12 @@ section:nth-of-type(3n + 1) .landing__container::after {
 section.your-active-class {
     background: rgb(0, 0, 0);
     background: linear-gradient(0deg, rgba(0, 0, 0, 0.1) 0%, rgba(0, 0, 0, 0) 100%);
+    box-shadow: 0rem 0rem 4px gray;
+
+}
+
+section.your-active-class h2 {
+    font-style: italic;
 }
 
 section.your-active-class .landing__container::before {
@@ -203,21 +277,46 @@ section.your-active-class .landing__container::before {
     animation: rotate 4s linear 0s infinite forwards;
 }
 
-section.your-active-class .landing__container::after {
-    opacity: 1;
-    animation: rotate 5s linear 0s infinite forwards reverse;
-}
-
 /* Section Active Styles Keyframe Animations */
 @keyframes rotate {
-	from {
-		transform: rotate(0deg)
-		           translate(-1em)
-		           rotate(0deg);
-	}
-	to {
-		transform: rotate(360deg)
-		           translate(-1em) 
-		           rotate(-360deg);
-	}
+    from {
+        transform: rotate(0deg) translate(-1em) rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg) translate(-1em) rotate(-360deg);
+    }
+}
+
+/* this section is */
+/* new */
+
+/* the ToUp btn */
+.toTopSection {
+    display: flex;
+    justify-content: center;
+
+}
+
+.toTopSection #goToTopBtn {
+    font-size: 1rem;
+    position: fixed;
+    top: 80%;
+    padding: 0.5rem 1rem;
+    background-color: #eee;
+    border: #fff;
+    border-radius: 0.5rem;
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.5s;
+}
+
+.toTopSection #goToTopBtn.showToUpBtn {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.toTopSection #goToTopBtn img {
+    width: 0.7rem;
+    height: 1rem;
 }

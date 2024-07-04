@@ -1,24 +1,3 @@
-/* eslint quotes: ["error", "double"] */
-/**
- * 
- * Manipulating the DOM exercise.
- * Exercise programmatically builds navigation,
- * scrolls to anchors from navigation,
- * and highlights section in viewport upon scrolling.
- * 
- * Dependencies: None
- * 
- * JS Version: ES2015/ES6
- * 
- * JS Standard: ESlint
- * 
-*/
-
-/**
- * Comments should be present at the beginning of each procedure and class.
- * Great to have comments before crucial code sections within the procedure.
-*/
-
 /**
  * Define Global Variables
  * 
@@ -37,43 +16,74 @@ let goToTopBtn = document.querySelector("#goToTopBtn");
  * Start Helper Functions
  * 
 */
-// add active class
 
+/**
+* @description Add active class to a section and associated link
+* @param {object} section - The section
+* @param {object} toSection - The associated link
+*/
 const addActiveClass = (section, toSection) => {
     if (!section.classList.contains("your-active-class")) {
         section.classList.add("your-active-class");
     }
-    toSection.classList.add('bold');
-    toSection.style.borderBottom = "3px solid #cc1";
-}
-// remove active class
 
+    toSection.classList.add('a__active');
+
+}
+
+/**
+* @description Remove active class to a section and associated link
+* @param {object} sections - All sections
+* @param {object} toSections - Their associated links
+*/
 const removeActiveClass = (sections, toSections) => {
     for (let i = 0; i < toSections.length; i++) {
         if (sections[i].classList.contains("your-active-class")) {
             sections[i].classList.remove("your-active-class");
         }
-        toSections[i].classList.remove('bold');
-        toSections[i].style.borderBottom = "0px ";
+
+
+        toSections[i].classList.remove('a__active');
     }
 }
 
+/**
+* @description Add class 'active' to section when near top of viewport (while scrolling)
+* @param {object} section - The section
+* @param {object} toSection - The associated link
+*/
+function makeActive(section, toSection) {
+    const box = section.getBoundingClientRect();
+    box.top <= 150 && box.bottom >= 150 ? addActiveClass(section, toSection) : removeActiveClass([section], [toSection]);
+
+}
+
+// TODO: show the toUp button
+
+const showToUpbtn = ()=>{
+    window.scrollY > 300 ? goToTopBtn.classList.add("showToUpBtn") : goToTopBtn.classList.remove("showToUpBtn");
+
+}
 /**
  * End Helper Functions
  * Begin Main Functions
  * 
 */
-// collapsable sections
-for (let i = 0; i < showContent.length; i++) {
 
-    showContent[i].addEventListener('click', () => {
-        content[i].classList.toggle("content");
-    });
+// TODO: make sections collapsable - Immediately Invoked Function Expression (IIFE)
 
-}
+const collapsable = (() =>{
+    for (let i = 0; i < showContent.length; i++) {
 
-// build the nav
-const addLinksToNavbar = () => {
+        showContent[i].addEventListener('click', () => {
+            content[i].classList.toggle("content");
+        });
+    
+    }
+})();
+
+// TODO: build the navbar dynamically - (IIFE)
+const addLinksToNavbar = (() => {
     for (let i = 0; i < sections.length; i++) {
         let li = document.createElement('li');
         li.classList.add("toSection");
@@ -81,21 +91,7 @@ const addLinksToNavbar = () => {
         navbar__list.appendChild(li);
 
     }
-}
-
-// Add class 'active' to section when near top of viewport
-function makeActive(section, toSection) {
-    const box = section.getBoundingClientRect();
-    if (box.top <= 150 && box.bottom >= 150) {
-        addActiveClass(section, toSection);
-    } else {
-        removeActiveClass([section], [toSection]);
-    }
-}
-
-
-// Scroll to anchor ID using scrollTO event
-
+})();
 
 /**
  * End Main Functions
@@ -103,8 +99,6 @@ function makeActive(section, toSection) {
  *
 */
 
-// Build menu
-addLinksToNavbar();
 
 let toSections = document.querySelectorAll(".toSection");
 
@@ -114,7 +108,15 @@ for (let i = 0; i < toSections.length; i++) {
 
         event.preventDefault();
         removeActiveClass(sections, toSections);
-        window.scrollTo(0, sections[i].offsetTop - 40);
+
+        // Scroll to anchor ID using scrollIntoView event
+        window.scrollTo({
+            left:0,
+            top:document.getElementById(`section${i+1}`).offsetTop,
+            behavior: "smooth"
+        
+        });
+
         // Set sections as active
         addActiveClass(sections[i], toSections[i]);
 
@@ -122,18 +124,11 @@ for (let i = 0; i < toSections.length; i++) {
     });
 
     document.addEventListener('scroll', () => {
-        page__header.style.display = "fixed";
         // Set sections as active
         makeActive(sections[i], toSections[i]);
 
         // show the ToUp button
-        if (window.scrollY > 300) {
-            goToTopBtn.classList.add("showToUpBtn");
-        } else {
-            goToTopBtn.classList.remove("showToUpBtn");
-
-        }
-
+        showToUpbtn();
 
     });
 
@@ -153,13 +148,3 @@ window.onload = () => {
     page__header.style.display = "fixed";
 
 }
-
-
-
-
-
-
-
-
-
-

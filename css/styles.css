@@ -117,11 +117,13 @@ section {
     text-decoration: none;
     color: #000;
 }
-
-/* new */
-
-.bold {
+.navbar__menu li .a__active {
     font-weight: bolder;
+}
+/* new */
+.a__active {
+    font-weight: bolder;
+    border-bottom: #cc1 solid 3px;
 }
 
 .navbar__menu .menu__link {

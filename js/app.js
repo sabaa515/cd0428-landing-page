@@ -123,28 +123,37 @@ for (let i = 0; i < toSections.length; i++) {
 
     });
 
-    document.addEventListener('scroll', () => {
-        // Set sections as active
-        makeActive(sections[i], toSections[i]);
-
-        // show the ToUp button
-        showToUpbtn();
-
-    });
 
 }
 
-// onscrollEnd hide the nav 
-document.onscrollend = () => {
-    setTimeout(() => {
-        page__header.style.display = "none";
+let lastScrollTop = 0;
+document.addEventListener('scroll', () => {
+    // on scroll hide the navbar
+    let scrollTop = window.scrollY;
 
-    }, 6 * 1000);
+    if (scrollTop != lastScrollTop ) {
+      page__header.style.top = '-80px';
+    }
+    lastScrollTop = scrollTop;
+    
+   setTimeout(() => {
+      page__header.style.top = '0';
+    }, 150);
 
-}
+    // Set sections as active
+    for (let i = 0; i < toSections.length; i++) {
+    makeActive(sections[i], toSections[i]);
+
+    }
+    // show the ToUp button
+    showToUpbtn();
+
+});
 
 // onload display the nav 
 window.onload = () => {
     page__header.style.display = "fixed";
 
 }
+
+
